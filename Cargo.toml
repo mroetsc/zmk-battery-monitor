@@ -1,0 +1,11 @@
+[package]
+name = "zmk-battery-monitor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.41", features = ["full"] }
+zbus = { version = "4.4", features = ["tokio"] }
+anyhow = "1.0"
+ksni = "0.2"
+async-std = "1.12"
