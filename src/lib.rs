@@ -113,10 +113,17 @@ impl ZmkBatteryReader {
                         let level = battery_data.first().copied().unwrap_or(0);
 
                         // Get battery name from descriptor
-                        let name = self
+                        let mut name = self
                             .read_battery_name(char_path_str, managed_objects)
                             .await?
                             .unwrap_or_else(|| "Battery".to_string());
+
+                        // Map ZMK names to user-friendly names
+                        name = match name.as_str() {
+                            "Battery" => "Central".to_string(),
+                            "Peripheral 0" => "Peripheral".to_string(),
+                            _ => name,
+                        };
 
                         return Ok(Some(BatteryInfo { name, level }));
                     }
